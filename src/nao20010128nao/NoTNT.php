@@ -35,7 +35,7 @@ class NoTNT extends PluginBase implements Listener
 	public function onPlayerInteract(BlockPlaceEvent $event){
 		$player = $event->getPlayer();
 		$username = $player->getName();
-		if($this->config["banTNT"] and ($event->getBlockAgainst()->getId()===46)){
+		if($this->config["banTNT"] and ($event->getItem()->getId()==46)){
 			$event->setCancelled(true);
 			$this->console->sendMessage("[NoTNT] ".TextFormat::RED."TNT has placed by ".$username.".");
 			$player->sendMessage(TextFormat::RED."You can't place TNTs!");
