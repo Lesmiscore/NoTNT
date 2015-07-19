@@ -1,0 +1,14 @@
+name: NoTNT
+main: nao20010128nao\NoTNT
+version: 1.0.0
+api: [1.0.0]
+load: STARTUP
+author: nao20010128nao
+description: Bans TNT completely!
+website: https://github.com/nao20010128nao
+permissions:
+ nt.*:
+  children:
+   nt.command:
+    description: ""
+    default: op
