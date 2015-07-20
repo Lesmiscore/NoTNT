@@ -31,6 +31,10 @@ class NoTNT extends PluginBase implements Listener
 			"tnt", 
 			new TNTCommand($this, "tnt", "Manages TNT could be place by players.")
 		);
+		/*$commandMap->register(
+			"deltnt", 
+			new DelTNTCommand($this, "deltnt", "Manages TNT could be deleted by TNT removing engine.")
+		);*/
 		if($this->getServer()->getPluginManager()->getPlugin("NoExplode")!=null){
 			$this->console->sendMessage("NoExplode has detected! Is it needed?");
 		}
