@@ -52,7 +52,10 @@ class NoTNT extends PluginBase implements Listener
 		$player=$event->getPlayer();
 		if($this->config["deleteTNTs"] and ($block->getId()==46)){
 			$this->console->sendMessage("[NoTNT] ".TextFormat::GREEN."A TNT was broken. Deleting TNTs around it...");
+			$player->sendMessage(TextFormat::GREEN."You broke a TNT. Deleting TNTs around it...");
 			$this->removeTNTrescursive($player->getPosition()->getLevel()->getName(),$block->getX(),$block->getY(),$block->getZ(),0);
+			$this->console->sendMessage("[NoTNT] ".TextFormat::GREEN."Complete!");
+			$player->sendMessage(TextFormat::GREEN."Complete!");
 		}
 	}
 	public function removeTNTrescursive($levelName,$x,$y,$z,$nest=0){
@@ -69,7 +72,7 @@ class NoTNT extends PluginBase implements Listener
 		}else{
 			return;
 		}
-		if($nest>=5){
+		if($nest>=10){
 			return;
 		}
 		/*for($x=($x-1);$x<($x+1);$x++){
