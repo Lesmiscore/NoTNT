@@ -11,7 +11,7 @@ use pocketmine\Player;
 
 use pocketmine\utils\TextFormat;
 
-class TNTCommand extends Command implements PluginIdentifiableCommand
+class DelTNTCommand extends Command implements PluginIdentifiableCommand
 {
 	private $enable = false;
 	public function __construct(NoTNT $plugin, $name, $description)
