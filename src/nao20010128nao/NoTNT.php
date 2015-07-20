@@ -141,7 +141,7 @@ class NoTNT extends PluginBase implements Listener
 		$this->removeTNTrescursive($levelName,$x  ,$y-1,$z+2,$nest+1);
 		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z-2,$nest+1);
 		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z-1,$nest+1);
-		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z  ,$nest+1);
+		/*               Don't need to check the same place               */
 		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z+1,$nest+1);
 		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z+2,$nest+1);
 		$this->removeTNTrescursive($levelName,$x  ,$y+1,$z-2,$nest+1);
