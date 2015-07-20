@@ -19,8 +19,11 @@ class NoTNT extends PluginBase implements Listener
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		if(file_exists($this->getDataFolder()."/config.yml")){
 			$this->config=yaml_parse_file($this->getDataFolder()."/config.yml");
+			if(!isset($this->config["deleteTNTs"])){
+				$this->config=array_merge($this->config,array("deleteTNTs"=>true));
+			}
 		}else{
-			$this->config=array("banTNT"=>true);
+			$this->config=array("banTNT"=>true,"deleteTNTs"=>true);
 		}
 		$this->console=new ConsoleCommandSender();
 		$commandMap = $this->getServer()->getCommandMap();
@@ -47,7 +50,7 @@ class NoTNT extends PluginBase implements Listener
 	public function onPlayerInteract2(BlockBreakEvent $event){
 		$block=$event->getBlock();
 		$player=$event->getPlayer();
-		if($block->getId()==46){
+		if($this->config["deleteTNTs"] and ($block->getId()==46)){
 			$this->console->sendMessage("[NoTNT] ".TextFormat::GREEN."A TNT was broken. Deleting TNTs around it...");
 			$this->removeTNTrescursive($player->getPosition()->getLevel()->getName(),$block->getX(),$block->getY(),$block->getZ(),0);
 		}
