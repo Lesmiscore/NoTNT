@@ -72,16 +72,10 @@ class NoTNT extends PluginBase implements Listener
 		}else{
 			return;
 		}
-		if($nest>=10){
+		if($nest>=30){
 			return;
 		}
-		/*for($x=($x-1);$x<($x+1);$x++){
-			for($y=($y-1);$y<($y+1);$y++){
-				for($z=($z-1);$z<($z+1);$z++){
-					$this->removeTNTrescursive($levelName,$x,$y,$z,$nest+1);
-				}
-			}
-		}*/
+		
 		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z-1,$nest+1);
 		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z  ,$nest+1);
 		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z+1,$nest+1);
