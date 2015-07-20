@@ -33,7 +33,7 @@ class NoTNT extends PluginBase implements Listener
 			new DelTNTCommand($this, "deltnt", "Manages TNT could be deleted by TNT removing engine.")
 		);
 		if($this->getServer()->getPluginManager()->getPlugin("NoExplode")!=null){
-			$this->console->sendMessage("NoExplode has detected! Is it needed?");
+			$this->console->sendMessage("[NoTNT] NoExplode has detected! Is it needed?");
 		}
 	}
 	public function onDisable(){
