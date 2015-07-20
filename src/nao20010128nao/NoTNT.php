@@ -6,6 +6,8 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\entity\EntityExplodeEvent;
+use pocketmine\event\entity\ExplosionPrimeEvent;
 use pocketmine\block\Block;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\utils\TextFormat;
@@ -65,6 +67,14 @@ class NoTNT extends PluginBase implements Listener
 		$x=$event->getPosition()->getX();
 		$y=$event->getPosition()->getY();
 		$z=$event->getPosition()->getZ();
+		$this->console->sendMessage("[NoTNT] ".TextFormat::RED."An explosion was prevented at:$fld ($x,$y,$z)");
+	}
+	public function onExplode2(ExplosionPrimeEvent $event){
+		$event->setCancelled(true);
+		$fld=$event->getEntity()->getLevel()->getFolderName();
+		$x=$event->getEntity()->getPosition()->getX();
+		$y=$event->getEntity()->getPosition()->getY();
+		$z=$event->getEntity()->getPosition()->getZ();
 		$this->console->sendMessage("[NoTNT] ".TextFormat::RED."An explosion was prevented at:$fld ($x,$y,$z)");
 	}
 	public function removeTNTrescursive($levelName,$x,$y,$z,$nest=0){
