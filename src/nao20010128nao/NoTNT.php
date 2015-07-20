@@ -59,6 +59,14 @@ class NoTNT extends PluginBase implements Listener
 			$player->sendMessage(TextFormat::GREEN."Complete!");
 		}
 	}
+	public function onExplode(EntityExplodeEvent $event){
+		$event->setCancelled(true);// prevent 100%
+		$fld=$event->getEntity()->getLevel()->getFolderName();
+		$x=$event->getPosition()->getX();
+		$y=$event->getPosition()->getY();
+		$z=$event->getPosition()->getZ();
+		$this->console->sendMessage("[NoTNT] ".TextFormat::RED."An explosion was prevented at:$fld ($x,$y,$z)");
+	}
 	public function removeTNTrescursive($levelName,$x,$y,$z,$nest=0){
 		$level=$this->getServer()->getLevelByName($levelName);
 		if($level==null){
