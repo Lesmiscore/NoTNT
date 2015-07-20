@@ -5,8 +5,11 @@ namespace nao20010128nao;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\block\Block;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\utils\TextFormat;
+use pocketmine\math\Vector3;
 
 class NoTNT extends PluginBase implements Listener
 {
@@ -40,5 +43,67 @@ class NoTNT extends PluginBase implements Listener
 			$this->console->sendMessage("[NoTNT] ".TextFormat::RED."TNT has placed by ".$username.".");
 			$player->sendMessage(TextFormat::RED."You can't place TNTs!");
 		}
+	}
+	public function onPlayerInteract2(BlockBreakEvent $event){
+		$block=$event->getBlock();
+		$player=$event->getPlayer();
+		if($block->getId()==46){
+			$this->console->sendMessage("[NoTNT] ".TextFormat::GREEN."A TNT was broken. Deleting TNTs around it...");
+			$this->removeTNTrescursive($player->getPosition()->getLevel()->getName(),$block->getX(),$block->getY(),$block->getZ(),0);
+		}
+	}
+	public function removeTNTrescursive($levelName,$x,$y,$z,$nest=0){
+		$level=$this->getServer()->getLevelByName($levelName);
+		if($level==null){
+			return;
+		}
+		$vector=new Vector3($x,$y,$z);
+		$block=$level->getBlock($vector,false);
+		if($block->getId()==46){
+			if(!$level->setBlock($vector,Block::get(0))){
+				$this->console->sendMessage("[NoTNT] ".TextFormat::RED."TNT at ($x,$y,$z) couldn't be deleted!.");
+			}
+		}else{
+			return;
+		}
+		if($nest>=5){
+			return;
+		}
+		/*for($x=($x-1);$x<($x+1);$x++){
+			for($y=($y-1);$y<($y+1);$y++){
+				for($z=($z-1);$z<($z+1);$z++){
+					$this->removeTNTrescursive($levelName,$x,$y,$z,$nest+1);
+				}
+			}
+		}*/
+		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y-1,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y  ,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y  ,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y  ,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y+1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y+1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x-1,$y+1,$z+1,$nest+1);
+		
+		$this->removeTNTrescursive($levelName,$x  ,$y-1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y-1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y-1,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z-1,$nest+1);
+	  //$this->removeTNTrescursive($levelName,$x  ,$y  ,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y  ,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y+1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y+1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x  ,$y+1,$z+1,$nest+1);
+		
+		$this->removeTNTrescursive($levelName,$x+1,$y-1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y-1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y-1,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y  ,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y  ,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y  ,$z+1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y+1,$z-1,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y+1,$z  ,$nest+1);
+		$this->removeTNTrescursive($levelName,$x+1,$y+1,$z+1,$nest+1);
 	}
 }
